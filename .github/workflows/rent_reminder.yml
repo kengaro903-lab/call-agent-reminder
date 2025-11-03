@@ -1,0 +1,33 @@
+name: Monthly WhatsApp Rent Reminder
+
+on:
+  schedule:
+    # 13:39 IST = 08:09 UTC
+    - cron: "9 8 3 * *"   # Runs every month on 3rd at 13:39 IST
+  workflow_dispatch:      # Allows manual trigger
+
+jobs:
+  send-rent-reminder:
+    runs-on: ubuntu-latest
+    env:
+      WHAPI_TOKEN:  ${{ secrets.WHAPI_TOKEN }}
+      GROUP_ID:     ${{ secrets.GROUP_ID }}
+      MENTION_WAID: ${{ secrets.MENTION_WAID }}
+      DISPLAY_NAME: ${{ secrets.DISPLAY_NAME }}
+      TIMEZONE:     "Asia/Kolkata"
+      IST_DAY:      "03"
+      IST_TIME:     "13:39"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests python-dotenv
+
+      - name: Run WhatsApp rent reminder
+        run: python send_message.py
