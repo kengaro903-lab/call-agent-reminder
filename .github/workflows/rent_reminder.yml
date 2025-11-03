@@ -1,20 +1,11 @@
 name: Test WhatsApp Rent Reminder
 
 on:
-  workflow_dispatch:   # Only manual run for testing
+  workflow_dispatch:  # allows manual run from GitHub Actions tab
 
 jobs:
   send-rent-reminder:
     runs-on: ubuntu-latest
-
-    env:
-      WHAPI_TOKEN:  ${{ secrets.WHAPI_TOKEN }}
-      GROUP_ID:     ${{ secrets.GROUP_ID }}
-      MENTION_WAID: ${{ secrets.MENTION_WAID }}
-      DISPLAY_NAME: ${{ secrets.DISPLAY_NAME }}
-      TIMEZONE:     "Asia/Kolkata"
-      IST_DAY:      "03"
-      IST_TIME:     "17:15"
 
     steps:
       - name: Checkout repository
@@ -23,10 +14,14 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install requests python-dotenv
+        run: pip install requests pytz
 
       - name: Run WhatsApp rent reminder (test)
+        env:
+          WHAPI_TOKEN: ${{ secrets.WHAPI_TOKEN }}
+          GROUP_ID: ${{ secrets.GROUP_ID }}
+          MENTION_WAID: ${{ secrets.MENTION_WAID }}
         run: python send_message.py
