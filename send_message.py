@@ -6,7 +6,7 @@ from datetime import datetime
 # Load environment variables
 WHAPI_TOKEN = os.getenv("WHAPI_TOKEN")
 GROUP_ID = os.getenv("GROUP_ID")
-MENTION_WAID = 918483826996@c.us  # Example: 918483826996@c.us
+MENTION_WAID = "918483826996@c.us"
 MENTION_NAME = "Sanket"  # The visible name
 
 if not WHAPI_TOKEN or not GROUP_ID or not MENTION_WAID:
