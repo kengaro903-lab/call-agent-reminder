@@ -3,31 +3,31 @@ import requests
 import pytz
 from datetime import datetime
 
-# Load environment variables
+# Load environment variables from GitHub Secrets
 WHAPI_TOKEN = os.getenv("WHAPI_TOKEN")
 GROUP_ID = os.getenv("GROUP_ID")
-MENTION_WAID = "918483826996@c.us"
-MENTION_NAME = "Sanket"  # The visible name
+MENTION_WAID = os.getenv("MENTION_WAID")
+MENTION_NAME = os.getenv("MENTION_NAME", "Sanket")  # Default to Sanket if not set
 
 if not WHAPI_TOKEN or not GROUP_ID or not MENTION_WAID:
     print("❌ Missing required environment variables.")
     exit(1)
 
-# Current IST time
+# Current time in IST
 ist = pytz.timezone("Asia/Kolkata")
 now = datetime.now(ist)
 formatted_time = now.strftime("%I:%M %p")
 
-# WhatsApp message
+# WhatsApp message text
 message_text = f"Please confirm if rent for Raintree flat has been received this month? @{MENTION_NAME}"
 
-# Whapi API setup
+# Prepare request
 url = "https://gate.whapi.cloud/messages/text"
 headers = {"Authorization": f"Bearer {WHAPI_TOKEN}", "Content-Type": "application/json"}
 payload = {
     "to": GROUP_ID,
     "body": message_text,
-    "mentions": [MENTION_WAID]  # FIXED: must be a list of strings
+    "mentions": [MENTION_WAID]  # mention as list of strings
 }
 
 # Send message
