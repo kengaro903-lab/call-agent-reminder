@@ -1,10 +1,10 @@
 name: Monthly WhatsApp Rent Reminder
 
 on:
-  workflow_dispatch:   # Allows manual test runs
   schedule:
-    # Runs on the 2nd of every month at 22:50 IST (17:20 UTC)
-    - cron: "20 17 2 * *"
+    # Runs automatically on the 3rd of every month at 19:00 IST (13:30 UTC)
+    - cron: "30 13 3 * *"
+  workflow_dispatch:  # Allows manual testing
 
 jobs:
   send-rent-reminder:
@@ -27,4 +27,5 @@ jobs:
           WHAPI_TOKEN: ${{ secrets.WHAPI_TOKEN }}
           GROUP_ID: ${{ secrets.GROUP_ID }}
           MENTION_WAID: ${{ secrets.MENTION_WAID }}
+          MENTION_NAME: ${{ secrets.MENTION_NAME }}
         run: python send_message.py
