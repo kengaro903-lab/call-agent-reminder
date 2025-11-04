@@ -3,7 +3,7 @@ name: Test WhatsApp Rent Reminder
 on:
   schedule:
     - cron: "0 6 4 * *"  # Runs automatically at 11:30 AM IST on the 4th day of every month
-  workflow_dispatch:       # Allows manual testing from GitHub Actions
+  workflow_dispatch:       # Also allows you to run manually if needed
 
 jobs:
   send-rent-reminder:
