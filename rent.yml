@@ -1,9 +1,10 @@
-name: Scheduled WhatsApp Rent Reminder
+name: WhatsApp Rent Reminder - 4th Nov 10:30AM IST
 
 on:
   schedule:
-    - cron: "0 5 4 * *"  # Runs at 05:00 UTC (10:30 AM IST on the 4th)
-  workflow_dispatch:  # Allows you to run manually too
+    # Runs once at 05:00 UTC (10:30 AM IST) on November 4
+    - cron: "0 5 4 11 *"  
+  workflow_dispatch:  # Allows manual trigger too
 
 jobs:
   send-rent-reminder:
@@ -23,11 +24,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests pytz
 
-      - name: Run WhatsApp rent reminder (scheduled)
+      - name: Send WhatsApp rent reminder
         env:
           WHAPI_TOKEN: ${{ secrets.WHAPI_TOKEN }}
           GROUP_ID: ${{ secrets.GROUP_ID }}
           MENTION_WAID: ${{ secrets.MENTION_WAID }}
         run: |
-          echo "Sending WhatsApp message..."
+          echo "📅 Scheduled message triggered at 10:30 AM IST on Nov 4"
           python send_message.py
