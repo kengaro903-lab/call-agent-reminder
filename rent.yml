@@ -2,8 +2,10 @@ name: Monthly WhatsApp Rent Reminder
 
 on:
   schedule:
-    # Runs automatically on the 3rd of every month at 20:00 IST (14:30 UTC)
-    - cron: "30 14 3 * *"
+    # Runs automatically on the 4th of every month at 10:15 AM IST (04:45 UTC)
+    - cron: "45 4 4 * *"
+    # Backup run at 10:20 AM IST (04:50 UTC)
+    - cron: "50 4 4 * *"
   workflow_dispatch:  # Allows manual testing
 
 jobs:
