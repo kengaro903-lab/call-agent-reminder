@@ -1,10 +1,10 @@
-name: WhatsApp Rent Reminder - 4th Nov 11:00AM IST
+name: WhatsApp Rent Reminder - Auto 4th 11:00AM IST
 
 on:
   schedule:
-    # Runs once at 05:30 UTC (11:00 AM IST) on November 4
-    - cron: "30 5 4 11 *"
-  workflow_dispatch:  # Allows you to manually trigger for testing
+    # Runs automatically at 05:30 UTC = 11:00 AM IST, on the 4th of every month
+    - cron: "30 5 4 * *"
+  workflow_dispatch:  # Optional: lets you test manually anytime
 
 jobs:
   send-rent-reminder:
@@ -12,12 +12,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
@@ -29,6 +29,7 @@ jobs:
           WHAPI_TOKEN: ${{ secrets.WHAPI_TOKEN }}
           GROUP_ID: ${{ secrets.GROUP_ID }}
           MENTION_WAID: ${{ secrets.MENTION_WAID }}
+          MENTION_NAME: ${{ secrets.MENTION_NAME }}
         run: |
-          echo "🕚 Scheduled message triggered at 11:00 AM IST on Nov 4"
+          echo "🕚 Scheduled message triggered for 11:00 AM IST (04:30 UTC)"
           python send_message.py
