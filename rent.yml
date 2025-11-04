@@ -1,11 +1,9 @@
-name: Automatic WhatsApp Rent Reminder
+name: WhatsApp Rent Reminder (Auto)
 
 on:
   schedule:
-    # Run at 11:30 AM IST on November 4 (Convert IST -> UTC = 06:00 UTC)
-    - cron: "0 6 4 11 *"  # minute hour day month day_of_week
-  workflow_dispatch: # Keep manual trigger for testing
-    {}
+    - cron: "0 6 4 * *"  # Runs at 11:30 AM IST on the 4th (6:00 AM UTC)
+  workflow_dispatch:     # Optional – lets you still run it manually
 
 jobs:
   send-rent-reminder:
@@ -18,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: '3.x'
 
       - name: Install dependencies
         run: |
@@ -27,5 +25,7 @@ jobs:
       - name: Run WhatsApp rent reminder
         env:
           WHAPI_TOKEN: ${{ secrets.WHAPI_TOKEN }}
-          GROUP_ID: ${{ secrets.GROUP_ID }}
+          PHONE_NUMBER_ID: ${{ secrets.PHONE_NUMBER_ID }}
+          TO_NUMBER: ${{ secrets.TO_NUMBER }}
+          MESSAGE: "Hey Sanket! This is your automated rent reminder 🏠💰"
         run: python send_message.py
